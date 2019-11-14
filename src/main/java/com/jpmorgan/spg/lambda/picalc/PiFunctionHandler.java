@@ -139,11 +139,18 @@ public class PiFunctionHandler implements RequestHandler<HttpQuerystringRequest,
 
 
 	private double calcPi(double path, int cacheSize) {
-    	int i, j;
+    	int i;
     	int nThrows = 0;
     	int nSuccess = 0;
     	
     	double x, y;
+    	int indexX;
+    	int indexY;
+
+    	if (cacheSize < 2) {
+    		// set to 2 by default to hold at least 2 random numbers
+    		cacheSize = 2;
+    	}
     	
     	double[] randoms = new double[cacheSize];
     	int randomSaved = 0;
@@ -152,18 +159,20 @@ public class PiFunctionHandler implements RequestHandler<HttpQuerystringRequest,
     		x = Math.random();
     		y = Math.random();
     		
-    		if (randomSaved < cacheSize) {
-    			randoms[randomSaved] = x;
-    			randomSaved ++;
+    		if (randomSaved >= cacheSize) {
+    			randomSaved = 0; // rewind to the beginning of array        			
     		}
+    		
+  			indexX = randomSaved;  			
+    		randoms[randomSaved++] = Math.random();
 
-    		if (randomSaved < cacheSize) {
-    			randoms[randomSaved] = y;
-    			randomSaved ++;
-    		}
-
+    		indexY = randomSaved;
+    		randoms[randomSaved++] = Math.random();
     		
     		nThrows ++;
+    		
+    		x = randoms[indexX];
+    		y = randoms[indexY];
     		
     		if ( x*x + y*y <= 1) {
     			nSuccess++;
