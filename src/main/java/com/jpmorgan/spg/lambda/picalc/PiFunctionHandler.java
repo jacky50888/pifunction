@@ -168,12 +168,12 @@ public class PiFunctionHandler implements RequestHandler<HttpQuerystringRequest,
 
     		indexY = randomSaved;
     		randoms[randomSaved++] = Math.random();
-    		
-    		nThrows ++;
-    		
+    	
     		x = randoms[indexX];
     		y = randoms[indexY];
     		
+    		nThrows ++;
+
     		if ( x*x + y*y <= 1) {
     			nSuccess++;
     		}
